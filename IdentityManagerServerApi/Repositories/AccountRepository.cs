@@ -24,7 +24,8 @@ namespace IdentityManagerServerApi.Repositories
                 Name = userDTO.Name,
                 Email = userDTO.Email,
                 PasswordHash = userDTO.Password,
-                UserName = userDTO.Email
+                UserName = userDTO.Email,
+                UserId = userDTO.UserId
             };
             var user = await userManager.FindByEmailAsync(newUser.Email);
             if (user is not null) return new GeneralResponse(false, "User registered already");
@@ -89,10 +90,11 @@ namespace IdentityManagerServerApi.Repositories
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var userClaims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, loggedUser.Id),
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim("AuthID", loggedUser.Id),
+                new Claim("Name", user.Name),
+                new Claim("Email", user.Email),
+                new Claim("Role", user.Role),
+                new Claim("UserID", loggedUser.UserId)
             };
             var token = new JwtSecurityToken(
                 issuer: config["Jwt:Issuer"],

@@ -54,8 +54,6 @@ namespace auth_ms_api.Controllers
                 return Unauthorized("Unauthorized");
             }
 
-            return Ok(req);
-
         }
 
     }

@@ -22,5 +22,8 @@ namespace SharedClassLibrary.DTOs
 
         [Required]
         public int Role { get; set; } = int.MaxValue;
+
+        [Required]
+        public string UserId { get; set; } = Guid.NewGuid().ToString();
     }
 }
