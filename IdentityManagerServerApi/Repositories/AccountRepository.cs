@@ -38,7 +38,7 @@ namespace IdentityManagerServerApi.Repositories
                 if (checkAdmin is null)
                     await roleManager.CreateAsync(new IdentityRole() { Name = "admin" });
                 await userManager.AddToRoleAsync(newUser, "admin");
-                return new GeneralResponse(true, "Account Created");
+                return new GeneralResponse(true, "Account Created"); 
             }
             else if(userDTO.Role == 1)
             {
