@@ -1,0 +1,91 @@
+{
+  "admin": {
+    "/user": {
+      "method": "get-post"
+    },
+    "/user/:id": {
+      "method": "get-put-patch-delete"
+    },
+    "/courses": {
+      "method": "get-post"
+    },
+    "/courses/:id": {
+      "method": "get-put-patch-delete"
+    },
+    "/chat/:id": {
+      "method": "get-put-patch-delete"
+    },
+    "/file": {
+      "method": "get-post-put-patch-delete"
+    }
+  },
+  "teacher": {
+    "/user": {
+      "method": ""
+    },
+    "/user/:id": {
+      "method": "get"
+    },
+    "/courses": {
+      "method": "get-post-put-patch-delete"
+    },
+    "/courses/:id": {
+      "method": "get-post"
+    },
+    "/chat/:id": {
+      "method": "get-post"
+    },
+    "/file": {
+      "method": "get-post-put-patch-delete"
+    }
+
+  },
+  "student": {
+    "/user": {
+      "method": ""
+    },
+    "/user/me": {
+      "method": "get-patch-delete"
+    },
+    "/user/:id": {
+      "method": "get"
+    },
+    "/courses": {
+      "method": ""
+    },
+    "/courses/:id": {
+      "method": "get-post"
+    },
+    "/chat/:id": {
+      "method": "get-post"
+    },
+    "/file": {
+      "method": "get"
+    },
+    "": {
+      "/user": {
+        "method": "post"
+      },
+      "/user/me": {
+        "method": ""
+      },
+      "/user/:id": {
+        "method": ""
+      },
+      "/courses": {
+        "method": ""
+      },
+      "/courses/:id": {
+        "method": ""
+      },
+      "/chat/:id": {
+        "method": ""
+      },
+      "/file": {
+        "method": ""
+      }
+    }
+  }
+
+
+}
