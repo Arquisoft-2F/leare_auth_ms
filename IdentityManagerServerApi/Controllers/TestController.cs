@@ -45,15 +45,21 @@ namespace auth_ms_api.Controllers
             var tokenS = jsonToken as JwtSecurityToken;
             var role = tokenS.Claims.ToArray()[3].Value.ToString();
 
-            if (appRoutes[role][req["route"].ToString()]["method"].ToString().Contains(req["method"].ToString()))
+            try
             {
-                return Ok("Authorized");
-            }
-            else
-            {
-                return Unauthorized("Unauthorized");
+                if (appRoutes[role][req["route"].ToString()]["method"].ToString().Contains(req["method"].ToString()))
+                {
+                    return Ok("Authorized");
+                }
+                else
+                {
+                    return Unauthorized("Unauthorized");
+                }
             }
 
+            catch {
+                return BadRequest("Enter a valid route");
+            }
         }
 
     }
