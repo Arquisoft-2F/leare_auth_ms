@@ -60,7 +60,7 @@ builder.Services.AddScoped<IUserAccount, AccountRepository>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()||true)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
