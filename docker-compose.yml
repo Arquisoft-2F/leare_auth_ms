@@ -1,34 +1,95 @@
-version: '3.4'
-   
+version: '3.8'
 services:
-    SqlServerDb:
-        container_name: SqlServerContainer
-        image: mcr.microsoft.com/mssql/server:2022-latest
-        user: root
-        # volumes:
-        #   - db-data:/var/opt/mssql/data
-        ports:
-            - 8002:1433
-        environment:
-            - ACCEPT_EULA=Y
-            - MSSQL_SA_PASSWORD=Password123
-    auth_ms_api:
-        container_name: leare_auth_ms
-        image: ${DOCKER_REGISTRY-}authmsapi
-        ports:
-            - 8001:80 
-        environment:
-            - ASPNETCORE_ENVIRONMENT=Development
-            - ASPNETCORE_URLS=https://+:80;http://+:443
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=bfc0cfd8-b6f3-4fa2-9aa8-e21e7000023d
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-        volumes:
-            - ~/.aspnet/https:/https:ro
-        build:
-          context: .
-          dockerfile: IdentityManagerServerApi/Dockerfile
+  auth-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    user: root
+    volumes:
+      - ../db/leare_auth_db:/var/opt/mssql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password123
+    ports:
+      - "1433:1433"
+    networks:
+      - leare_network
 
-        depends_on:
-            - SqlServerDb 
-volumes:
-  db-data:
+  auth-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - auth-db
+    networks:
+      - leare_network
+
+networks:
+  leare_network:
+    driver: bridge
+
+
+# SqlServerDb:
+#         container_name: SqlServerContainer
+#         image: mcr.microsoft.com/mssql/server:2022-latest
+#         user: root
+#         # volumes:
+#         #   - db-data:/var/opt/mssql/data
+#         ports:
+#             - 8002:1433
+#         environment:
+#             - ACCEPT_EULA=Y
+#             - MSSQL_SA_PASSWORD=Password123
+#     auth_ms_api:
+#         container_name: leare_auth_ms
+#         image: ${DOCKER_REGISTRY-}authmsapi
+#         ports:
+#             - 8001:80 
+#         environment:
+#             - ASPNETCORE_ENVIRONMENT=Development
+#             - ASPNETCORE_URLS=https://+:80;http://+:443
+#             - ASPNETCORE_Kestrel_CertificatesDefault_Password=bfc0cfd8-b6f3-4fa2-9aa8-e21e7000023d
+#             - ASPNETCORE_Kestrel_CertificatesDefault_Path=/https/aspnetapp.pfx
+#         volumes:
+#             - ~/.aspnet/https:/https:ro
+#         build:
+#           context: .
+#           dockerfile: IdentityManagerServerApi/Dockerfile
+
+#         depends_on:
+#             - SqlServerDb 
+
+# version: '3.4'
+   
+# services:
+#     SqlServerDb:
+#         container_name: SqlServerContainer
+#         image: mcr.microsoft.com/mssql/server:2022-latest
+#         user: root
+#         # volumes:
+#         #   - db-data:/var/opt/mssql/data
+#         ports:
+#             - 8002:1433
+#         environment:
+#             - ACCEPT_EULA=Y
+#             - MSSQL_SA_PASSWORD=Password123
+#     auth_ms_api:
+#         container_name: leare_auth_ms
+#         image: ${DOCKER_REGISTRY-}authmsapi
+#         ports:
+#             - 8001:80 
+#         environment:
+#             - ASPNETCORE_ENVIRONMENT=Development
+#             - ASPNETCORE_URLS=https://+:80;http://+:443
+#             - ASPNETCORE_Kestrel__Certificates__Default__Password=bfc0cfd8-b6f3-4fa2-9aa8-e21e7000023d
+#             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+#         volumes:
+#             - ~/.aspnet/https:/https:ro
+#         build:
+#           context: .
+#           dockerfile: IdentityManagerServerApi/Dockerfile
+
+#         depends_on:
+#             - SqlServerDb 
+# volumes:
+#   db-data:

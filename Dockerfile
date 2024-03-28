@@ -9,8 +9,8 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["IdentityManagerServerApi/auth_ms_api.csproj", "IdentityManagerServerApi/"]
-COPY ["SharedClassLibrary/SharedClassLibrary.csproj", "SharedClassLibrary/"]
+COPY ["./IdentityManagerServerApi/auth_ms_api.csproj", "./IdentityManagerServerApi/"]
+COPY ["./SharedClassLibrary/SharedClassLibrary.csproj", "./SharedClassLibrary/"]
 RUN dotnet restore "./IdentityManagerServerApi/auth_ms_api.csproj"
 COPY . .
 WORKDIR "/src/IdentityManagerServerApi"
@@ -23,4 +23,5 @@ RUN dotnet publish "./auth_ms_api.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "auth_ms_api.dll"]
+# ENTRYPOINT ["dotnet", "auth_ms_api.dll"]
+CMD /bin/sleep 300 && dotnet auth_ms_api.dll
