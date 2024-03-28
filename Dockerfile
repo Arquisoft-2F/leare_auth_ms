@@ -24,4 +24,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 # ENTRYPOINT ["dotnet", "auth_ms_api.dll"]
-CMD /bin/sleep 120 && dotnet auth_ms_api.dll
+CMD /bin/sleep 300 && dotnet auth_ms_api.dll
