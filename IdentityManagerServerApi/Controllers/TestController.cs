@@ -35,7 +35,7 @@ namespace auth_ms_api.Controllers
                 }
                 else
                 {
-                    return Unauthorized("Unauthorized");
+                    return Ok("Unauthorized");
                 }
 
             }
@@ -53,12 +53,12 @@ namespace auth_ms_api.Controllers
                 }
                 else
                 {
-                    return Unauthorized("Unauthorized");
+                    return Ok("Unauthorized");
                 }
             }
 
             catch {
-                return BadRequest("Enter a valid route");
+                return Ok("Enter a valid route");
             }
         }
 
